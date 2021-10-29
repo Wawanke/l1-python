@@ -40,6 +40,7 @@ def affi_tps (temps):
             t[index_i] = 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
         else :
             print(str(i) + t_plu[index_i], end= "")
+            t[index_i] = 1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
 #affi_tps((1, 0, 3, 1))
 
@@ -132,21 +133,51 @@ def seconde_verif_bisextile(sec): #Prend des secondes
     return int(sec / 86400) % 4
 
 def tempsEnDateBisextile(temps):
+    print(temps)
     tupl = (temps[1], temps[2], temps[3], temps[4])
     p = temps[0] * 31536000 + temps_en_sec(tupl)
-    print(type(p))
     o = time.gmtime(p)
     l = o[2]
-    temps = (temps[0], o, temps[1], temps[2], temps[3], temps[4])
+    temps = [temps[0], o[2], temps[1], temps[2], temps[3], temps[4]]
+    print(o)
     if seconde_verif_bisextile(temps_en_sec((temps[0], 0, 0, 0))) == 0 :
-        return "cestBON"
+        if temps[1] == 2 and temps[2] > 28 :
+            temps[1] += 1
+            temps[2] -= 28
+        return temps
     else :
         return temps
 
-temps = tempsEnDate((365*2000, 1, 2, 3))
+temps = tempsEnDate((365*40 + 68, 32, 2, 3))
 #afficheDate(temps)
 #afficheDate(tempsEnDateBisextile(temps))
-print(tempsEnDateBisextile(temps))
+#print(tempsEnDateBisextile(temps)) #problème avec les mois (créations des mois selon 30 où 31 jours !
+
+
+def verifie(liste_temps):
+    o = 0
+    for i in liste_temps :
+        for k in i :
+            if k > 48 :
+                print("Trop d'heures de travail le " + str(liste_temps.index(i) + 1) + "ème mois, la " + str(i.index(k) + 1) + "ème semaine")
+            o += k
+        if o > 140 :
+            print("Trop de travail le " + str(liste_temps.index(i) + 1) + "ème mois")
+        o = 0
+
+liste_temps = [[1,2,39,34],[0,1,9,4],[0,29,39,51],[0,31,13,46]]
+#verifie(liste_temps)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
