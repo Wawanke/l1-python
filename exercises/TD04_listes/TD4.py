@@ -216,5 +216,3 @@ def estNormal(carre):
 
 
 
-
-
