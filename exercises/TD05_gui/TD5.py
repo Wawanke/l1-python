@@ -46,7 +46,8 @@ if __name__ == '__main__':
 
 #2. Dessins aléatoires
 
-
+global couleur
+couleur = "red"
 
 CANVAS_WIDTH, CANVAS_HEIGHT = 1100, 600
 
@@ -58,20 +59,33 @@ if __name__ == '__main__':
     def cercle():
         x1, y1 = random.randint(0, 1000), random.randint(0, 500)
         x2, y2 = x1 + 100, y1 + 100
-        canvas.create_oval(x1, y1, x2, y2, outline = "red")
+        canvas.create_oval(x1, y1, x2, y2, outline = couleur)
     def carre():
-        pass #Créer le carré (s'inspirer du cercle au-dessus)
+        x1, y1 = random.randint(0, 1000), random.randint(0, 500)
+        x2, y2 = x1 + 100, y1 + 100
+        canvas.create_rectangle(x1, y1, x2, y2, outline = couleur)
+        #Créer le carré (utiliser le théorème de pythagore pour trouver l'endroit
+        #exacte ou on met le deuxième point et pas just la diagonale égal à 100)
+    def croix():
+        x0, y0 = random.randint(50, 950), random.randint(50, 450)
+        x2, y2, x1, y1 = x0 + 50, y0 + 50, x0 - 50, y0 - 50
+        canvas.create_line(x1, y1, x2, y2, fill = couleur)
+        x1, x2, y1, y2 = x0 - 50, x0 + 50, y0 + 50, y0 - 50
+        canvas.create_line(x1, y1, x2, y2, fill = couleur)
+    def choisir_couleur():
+        global couleur
+        couleur = input("Couleurs dispos : black, yellow, blue, red, green, cyan, white ")
 
 
     #canvas.canvas_tk
 
-    bouton = tk.Button(root, text="Choisir une couleur", activebackground = "green", borderwidth = 8, font = ("helvetica", "30"), overrelief = "sunken")
+    bouton = tk.Button(root, text="Choisir une couleur", command = choisir_couleur, activebackground = "green", borderwidth = 8, font = ("helvetica", "30"), overrelief = "sunken")
     bouton.grid(row = 0,column = 2)
-    bouton = tk.Button(root, text="Cercle", command = cercle(), font = ("helvetica", "30"))
+    bouton = tk.Button(root, text="Cercle", command = cercle, font = ("helvetica", "30"))
     bouton.grid(row = 1,column = 0)
-    bouton = tk.Button(root, text="Carré", command = carre(), font = ("helvetica", "30"))
+    bouton = tk.Button(root, text="Carré", command = carre, font = ("helvetica", "30"))
     bouton.grid(row = 2,column = 0)
-    bouton = tk.Button(root, text="Croix", font = ("helvetica", "30"))
+    bouton = tk.Button(root, text="Croix", command = croix, font = ("helvetica", "30"))
     bouton.grid(row = 3,column = 0)
     # Affichage
 
@@ -79,21 +93,3 @@ if __name__ == '__main__':
     root.mainloop()
 
 
-
-#3.Cible en couleur
-
-#ordre les couleurs sont blue, green, black, yellow, magenta, red
-
-"""
-def cercle_color(x1, x2, y1, y2, color):
-    root = Tk()
-    canvas = Canvas(root, width = 1000, height = 800)
-
-    canvas.create_oval(x1, y1, x2, y2)
-
-    canvas.pack()
-    root.mainloop()
-
-
-cercle_color(50, 50, 100, 100, "blue")
-"""
